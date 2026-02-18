@@ -1,7 +1,7 @@
 // Importaciones
 import { armarCiudades, armarGenero } from "./components/index.js";
-import { validar } from "./helpers/validarFormulario.js";
 import { ciudades, generos } from "./use-case/index.js";
+import { validar } from "./helpers/validarFormulario.js";
 
 // variables
 const formulario = document.querySelector('form');
@@ -15,8 +15,11 @@ const ciudadId = document.querySelector("#ciudadId");
 
 const reglas = [
   {
-    "documento": true,
-    "nombre": true
+    documento : {required : true},
+    nombre : {required: true},
+    genero : {required: true},
+    ciudad : {required: true},
+    correo : {required: true} 
   }
 ];
 
@@ -41,10 +44,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   let datosGeneros = await generos();
   armarGenero(divGeneros, datosGeneros);
   armarCiudades(ciudadId, datosCiudades)
-})
+});
 
-formulario.addEventListener("submit", (e) => {
-  e.preventDefault()
+formulario.addEventListener("submit", (form) => {
+  form.preventDefault()
   // validarFormulario(e.target);
-  validar(e.target, reglas);
+  validar(form.target, reglas);
 });
